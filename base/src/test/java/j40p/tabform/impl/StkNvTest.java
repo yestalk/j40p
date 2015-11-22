@@ -27,6 +27,8 @@ public class StkNvTest {
 		for(Object i :nstxpt){
 			System.out.println(i);
 		}
+		
+		
 	}
 
 }
