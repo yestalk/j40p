@@ -37,5 +37,9 @@ public interface HttpEvent extends ContentProvider{
 	
 	File getFile();
 	
+	void setRespond(Respond resp);
+	boolean shouldServeFile(Respond resp);
+	void conclude(Respond resp);
+	
 	//int putFile(File f,Hvalue meta);
 }
