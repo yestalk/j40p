@@ -3,6 +3,8 @@
 	believed that  saved the half time of use to Xml compiling time.
 <a href='https://pledgie.com/campaigns/30673'><img alt='Click here to lend your support to: j40p java project and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/30673.png?skin_name=chrome' border='0' ></a>
 
+aaa
+
 "j40p" stand for : 32 years old <__Johnny__> wish it would be generally <__Premium__> in compensation for his earlier work while he continuously inevitably approaching his age <40> .
 
 it take the author 6 years to get this far,  and approximately  100,000 USD in Cost, i have great hope that i can recover  my cost in a short time ,better less than a mainland Chinese life time span.
