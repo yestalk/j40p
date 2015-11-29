@@ -1,18 +1,20 @@
 package j40p.base.cache;
 
 import java.nio.ByteBuffer;
- 
 
 public class ABBBuf extends ObjectCacheX<ByteBuffer> {
-	
-	public static class C extends K implements Criteria<ABBBuf>{};
-	public static C getCriteriaByCapacity(int cap){
+
+	public static class C extends K implements Criteria<ABBBuf> {
+	};
+
+	public static C getCriteriaBy(int cap, boolean isdire) {
 		C rtv = new C();
-		rtv.vs=(new Object[]{C.class,cap});
+		rtv.vs = (new Object[] { C.class, cap, isdire });
 		return rtv;
 	}
-	
-	private int bfcap;
+
+	private int bfcap = -1;
+	private boolean isdire;
 
 	private ABBBuf(int csize) {
 		super(csize);
@@ -20,33 +22,44 @@ public class ABBBuf extends ObjectCacheX<ByteBuffer> {
 	}
 
 	@Override
-	protected void init( Criteria<?> param) {
-		C lpm = (C)param;
-		this.bfcap=(Integer)(lpm.vs[1]);
-		 
+	protected void init(Criteria<?> param) {
+		if (this.bfcap == -1) {
+			C lpm = (C) param;
+			this.bfcap = (Integer) (lpm.vs[1]);
+			this.isdire = (boolean) (lpm.vs[2]);
+		}
+
 	}
 
 	@Override
 	protected ByteBuffer createNewOne() {
-
-		return ByteBuffer.allocate(this.bfcap);
+		if (this.isdire)
+			return ByteBuffer.allocateDirect(this.bfcap);
+		else
+			return ByteBuffer.allocate(this.bfcap);
 	}
 
 	@Override
 	protected boolean checkOne(ByteBuffer x) {
-		if(x.capacity()==this.bfcap){
+		if (!x.isReadOnly() && x.capacity() == this.bfcap && x.isDirect()== this.isdire) { 
 			x.clear();
 			return true;
-		}else 
+		} else
 			return false;
 	}
 
 	byte[] getA() {
-		return this.get().array();
+		if (this.isdire)
+			throw new RuntimeException("not support");
+		else
+			return this.get().array();
 	}
 
 	void recycleA(byte[] a) {
-		this.recycle(ByteBuffer.wrap(a));
+		if (this.isdire)
+			throw new RuntimeException("not support");
+		else
+			this.recycle(ByteBuffer.wrap(a));
 	}
 
 }

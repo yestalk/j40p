@@ -17,6 +17,7 @@ public interface Respond {
 	void writeTxt(String data);
 	void writeTxt(ByteBuffer data);
 	
+	
 	void respondFileAcrooding2suffix(File file,HashMap<String, String> str);
 	void respondFile(File file,UTF8ByteStr MIMEType);
 	void respondData(byte[] data,UTF8ByteStr MIMEType);
