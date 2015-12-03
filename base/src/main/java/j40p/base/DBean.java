@@ -24,7 +24,7 @@ public interface DBean {
 		}
 
 		private static ConcurrentHashMap<Class<?>, Class<?>> insmap = new ConcurrentHashMap<Class<?>, Class<?>>();
-		private static String backbean= "impl/j/DBeani2";
+		private static String backbean= "impl/j40p/base/DBeani3";
 		@Override
 		public <T_ extends DBean> T_ create(Class<T_> iclz) {
 			if (iclz.isInterface() && DBean.class.isAssignableFrom(iclz)) {

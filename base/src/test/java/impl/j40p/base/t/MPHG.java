@@ -1,23 +1,37 @@
-package impl.j40p.base;
+package impl.j40p.base.t;
+
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.TreeSet;
 
 public class MPHG {
-
-	static public int hash(int d, byte[] k) {
+	//static Entry<byte[],byte[]> etr;
+//	static {
+//		MPHG.etr.getKey();
+//		HashSet<UTF8ByteStr> hsub = new HashSet<UTF8ByteStr>();
+//	 
+//	}
+	
+	static public int dhash(int d, byte[] k) {
 		d = (d == 0) ? 0x811C9DC5 : d;
-		for (byte c : k)
-			d ^= c * 16777619;
+		for (byte c : k){
+				d ^= c;
+			d=(d%k.length==0)?d*16777630:d*16777619;
+//			if (d%k.length==0)
+//				d*=429496729;
+//			else
+//				d*=16777619;
+		}
 		return d & 0x7fffffff;
 	}
 
-	static public MPKey[] create(TreeSet<? extends HKey> hks) {
+	static public MPKey[] create(TreeSet<? extends HKey<?>> hks) {
 		int tosz = hks.size();
 		MPKeyholder[] lmpks = new MPKeyholder[hks.size()];
-		TreeSet<Integer> freeset = new TreeSet<Integer>();
-		TreeSet<Integer> tempfreeset = new TreeSet<Integer>();
+		HashSet<Integer> freeset = new HashSet<Integer>();
+		HashSet<Integer> tempfreeset = new HashSet<Integer>();
 		TreeSet<MPKeyholder> clidset = new TreeSet<MPKeyholder>();
 		for (HKey i : hks) {
 			int dj = i.dhash(0) % tosz;
@@ -50,7 +64,7 @@ public class MPHG {
 				for (HKey ki : i.mpset) {
 					int dd2dis = ki.dhash(dd) % tosz;
 
-					if (!freeset.contains(dd2dis)) {
+					if (!freeset.remove(dd2dis)) {
 						freeset.addAll(tempfreeset);
 						tempfreeset.clear();
 						lst.clear();
@@ -58,7 +72,7 @@ public class MPHG {
 						continue ddp;
 					} else {
 						tempfreeset.add(dd2dis);
-						freeset.remove(dd2dis);
+						//freeset.remove(dd2dis);
 						lst.add(dd2dis);
 					}
 
@@ -94,37 +108,56 @@ public class MPHG {
 
 	public static void main(String[] args) {
 		TreeSet<HKeye> tset = new TreeSet<HKeye>();
-		tset.add(new HKeye("hk/jbi/d8i88"));
-		tset.add(new HKeye("ee/df/d881"));
-		tset.add(new HKeye("d8/34/28/4"));
-		tset.add(new HKeye("d/99g/887"));
-		tset.add(new HKeye("d/yyui/88h"));
-		tset.add(new HKeye("d/778i/88j"));
-		tset.add(new HKeye("d/778i/88/j/nb"));
-		tset.add(new HKeye("d/778i/88/j/nb1"));
-		tset.add(new HKeye("d/778i/88/j/nb2"));
-		tset.add(new HKeye("d/778i/88/j/nb3"));
-		tset.add(new HKeye("d/778i/88/j/nb4"));
-		tset.add(new HKeye("d/778ie/88/j/nb5"));
-		tset.add(new HKeye("d/778i/88/j/nb6"));
-		tset.add(new HKeye("d/778i/88/j/nb7"));
-		tset.add(new HKeye("d/778i/88/j/nb8"));
-		tset.add(new HKeye("d/778i/88/j/nb9"));
-		tset.add(new HKeye("d/778i/88/j/nb10"));
-		tset.add(new HKeye("d/778i/88/j/nb11"));
-		tset.add(new HKeye("d/778i/88/j/nb12"));
-		tset.add(new HKeye("d/778i/88/j/nb13"));
-		tset.add(new HKeye("d/778i/88/j/nb14"));
-		tset.add(new HKeye("d/778i/88/j/nb15"));
-		tset.add(new HKeye("d/778i/88/j/nb16"));
-		tset.add(new HKeye("d/778i/88/j/nb1j"));
-		tset.add(new HKeye("d/778i/88/j/nb1k"));
-		tset.add(new HKeye("d/778i/88/j/nb1l"));
-		tset.add(new HKeye("d/778i/88/j/nb1o"));
+//		tset.add(new HKeye("expri.bean.DB1.p1"));
+//		tset.add(new HKeye("expri.bean.DB1.p2"));
+//		tset.add(new HKeye("expri.bean.DB1.p3"));
+//		tset.add(new HKeye("expri.bean.DB2.p1"));
+//		tset.add(new HKeye("expri.bean.DB2.p2"));
+//		tset.add(new HKeye("expri.bean.DB2.p3"));
+//		tset.add(new HKeye("expri.bean.DB3.p1"));
+//		tset.add(new HKeye("expri.bean.DB3.p4"));
+		
+//		tset.add(new HKeye("a1.p1"));
+//		tset.add(new HKeye("a1.p2"));
+//		tset.add(new HKeye("a1.p3"));
+//		tset.add(new HKeye("a2.p1"));
+//		tset.add(new HKeye("a2.p2"));
+//		tset.add(new HKeye("a2.p3"));
+//		tset.add(new HKeye("a3.p1"));
+//		tset.add(new HKeye("a3.p2"));
+//		
+
+		
+//		tset.add(new HKeye("p0.99.dd.a1.p1"));
+//		tset.add(new HKeye("p0.99.dd.a1.p2"));
+//		tset.add(new HKeye("p0.99.dd.a1.p3"));
+//		tset.add(new HKeye("p0.99.dd.a2.p1"));
+//		tset.add(new HKeye("p0.99.dd.a2.p2"));
+//		tset.add(new HKeye("p0.99.dd.a2.p3"));
+//		tset.add(new HKeye("p0.99.dd.a3.p1"));
+//		tset.add(new HKeye("p0.99.dd.a3.p2"));
+		
+//		
+//		tset.add(new HKeye("expri.bean.DB1.abc"));
+//		tset.add(new HKeye("expri.bean.DB1.yui"));
+//		tset.add(new HKeye("expri.bean.DB1.e7"));
+//		tset.add(new HKeye("expri.bean.DB2.m1"));
+//		tset.add(new HKeye("expri.bean.DB2.tty"));
+//		tset.add(new HKeye("expri.bean.DB2.lin"));
+//		tset.add(new HKeye("expri.bean.DB3.base"));
+//		tset.add(new HKeye("expri.bean.DB3.jack"));
+//		
+		
 		MPKey[] out = MPHG.create(tset);
 		System.out.println(Arrays.toString(out));
 
 	}
+	
+//	public static void main(String[] args) {
+//		byte x255 = (byte)128;
+//		byte x1 = 1;
+//		System.out.println(x255>x1);
+//	}
 
 	// public static void main(String[] args) {
 	// LinkedHashSet<Integer> itgs = new LinkedHashSet<Integer>();

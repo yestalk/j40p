@@ -88,7 +88,7 @@ public class PrintHdl implements TabFormHdl {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		BFHandler.setBFCache(ObjectCacheX.t.lookup(ABBBuf.class, ABBBuf.getCriteriaByCapacity(1402+32), 10000));
+		BFHandler.setBFCache(ObjectCacheX.t.lookup(ABBBuf.class, ABBBuf.getCriteriaBy(1402+32, false), 10000));
 		 
 		IntBuilder.setBFCache(ObjectCacheX.t.lookup(IntABuf.class, IntABuf.getCriteriaByCapacity(768), 10000));
 		//Stk.setBFCache(ObjectCacheX.t.lookup(EvABuf.class, EvABuf.getCriteriaByCapacity(32), 1000));

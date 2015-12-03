@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class ServerMain {
 	public static void main(String[] args) {
 		 
-		BFHandler.setBFCache(ObjectCacheX.t.lookup(ABBBuf.class, ABBBuf.getCriteriaByCapacity(1402+32), 5000));
+		BFHandler.setBFCache(ObjectCacheX.t.lookup(ABBBuf.class, ABBBuf.getCriteriaBy(1402+32,false), 5000));
 		 
 		IntBuilder.setBFCache(ObjectCacheX.t.lookup(IntABuf.class, IntABuf.getCriteriaByCapacity(4096), 5000));
 		
