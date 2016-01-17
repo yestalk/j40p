@@ -18,7 +18,7 @@ public interface DB3 extends DB1,DB2,DBean {
 			System.out.println("set:"+(System.nanoTime()-nots));
 			long not = System.nanoTime();
 			//long not = System.nanoTime();
-			System.out.println(db3.g(DB3.psmb1));
+			System.out.println(db3.g(DB4.psmb1));
 			System.out.println("get:"+(System.nanoTime()-not));
 			//System.out.println(System.nanoTime()-not);
 			//currentTimeMillis

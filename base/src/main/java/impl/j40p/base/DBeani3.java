@@ -1,6 +1,5 @@
 package impl.j40p.base;
 
-import impl.j40p.base.BHBuf.C;
 import j40p.base.ConfBean;
 import j40p.base.Configurable;
 import j40p.base.DBean;
@@ -8,20 +7,15 @@ import j40p.base.DefUtil;
 import j40p.base.MPHKey;
 import j40p.base.cache.ObjectABuf;
 import j40p.base.cache.ObjectCacheX;
-import j40p.base.cache.ObjectCacheX.Criteria;
 import j40p.base.l.L;
 import j40p.base.l.P;
 import j40p.base.l.Res;
 
-import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
-import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.HashMap;
 import java.util.TreeSet;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class DBeani3 implements DBean {
@@ -139,7 +133,6 @@ public abstract class DBeani3 implements DBean {
 
 	}
 
- 
 	@Override
 	public <T_> void s(L<T_> label, T_ value) {
 		int dnouns = 0;

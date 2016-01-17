@@ -72,33 +72,7 @@ public abstract class CaptureManager {
 	// return this.copy(new byte[this.length], this.cutrunk.capacity());
 	// }
 
-	public void forward() {
-		// System.out.print ( this.start+",");
-		this.length++;
-		//System.out.println("limit, length__"+this.limt+"   "+this.length);
-		if (this.limt>0 && this.length > this.limt) {
-			//System.out.println("here forward limit"+this.length+"  "+this.limt);
-			if (this.temp == null) {
-				throw new RuntimeException("exceed the intened limit for capturing:_" + this.limt + " length:_" + this.length);
-			} else if(this.trl.size()>1){
-				this.out();
-				//System.out.println("after out lenthg"+this.length+"  "+this.limt);
-			}
-		}
-
-	}
-
-	public void forward(int step) {
-
-		this.length += step;
-		if (this.limt>0 && this.length > this.limt) {
-			
-			if (this.temp == null)
-				throw new RuntimeException("exceed the intened limit for capturing:_" + this.limt + " length:_" + this.length);
-			else if(this.trl.size()>1)
-				this.out();
-		}
-	}
+ 
 
 	public void openEscape(int openpoint) {
 		if (this.trl.size() == 0)
@@ -237,7 +211,7 @@ public abstract class CaptureManager {
 	// return this.copy(new byte[this.length], this.cutrunk.capacity());
 	// }
 
-	public boolean isAllWhitespace() {
+	public boolean isAllWhitespace(int cupo) {
 		// System.out.println("isAllWhitespace:__"+this.trl.size());
 		if (this.espoint != -1)
 			throw new RuntimeException("unclosed espcape case.");
@@ -292,7 +266,7 @@ public abstract class CaptureManager {
 		return true;
 	}
 
-	public UTF8ByteStr extract() {
+	public UTF8ByteStr extract(int cupo) {
 		// System.out.println("\r\nexact start !!!!!!!!!!!!!!------------");
 		if (this.espoint != -1)
 			throw new RuntimeException("unclosed espcape case.");
@@ -366,93 +340,10 @@ public abstract class CaptureManager {
 		// System.out.println("\r\nexact over !!!!!!!!!!!!!!------------");
 		return rt;
 	}
+	
+	
 
-	// private int transoi(int oi,int step,int trunksize ,byte[] in,ByteBuffer
-	// fstbf){
-	//
-	// return oi;
-	// }
-
-	// public byte[] toArray() {
-	// return this.copy(new byte[this.length], this.cutrunk.capacity());
-	// }
-
-	// public void ending() {
-	// // System.out.println("ending...1");
-	// this.outperfix();
-	// // System.out.println("ending...2");
-	// int cp = this.cutrunk.capacity();
-	// int tsz = this.trl.size();
-	// if (tsz > 1) {
-	// // System.out.println("ending...3");
-	// ByteBuffer bfl = this.trl.removeLast();
-	// ByteBuffer bff = this.trl.removeFirst();
-	// bff.position(this.start).limit(cp);
-	// while (bff.hasRemaining()) {
-	// try {
-	// this.temp.write(bff);
-	//
-	// } catch (IOException e) {
-	// throw new RuntimeException(e);
-	//
-	// }
-	// }
-	// BFCache.i.recycle(bff);
-	// // System.out.println("ending...5");
-	// for (ByteBuffer i : this.trl) {
-	// i.clear();
-	// while (i.hasRemaining()) {
-	// try {
-	// this.temp.write(i);
-	//
-	// } catch (IOException e) {
-	// throw new RuntimeException(e);
-	// }
-	// }
-	// BFCache.i.recycle(i);
-	// }
-	// // System.out.println("ending...6");
-	// ByteBuffer bflr = bfl.asReadOnlyBuffer();
-	// // System.out.println("ending...8");
-	// bflr.limit((this.start + this.length) % cp).position(0);
-	// // System.out.println("ending...9");
-	// while (bflr.hasRemaining()) {
-	// // System.out.println("ending...10");
-	// try {
-	// this.temp.write(bflr);
-	//
-	// } catch (IOException e) {
-	// throw new RuntimeException(e);
-	//
-	// }
-	// }
-	//
-	// // BFCache.i.recycle(bfl);
-	// this.trl.clear();
-	// // System.out.println("ending...7");
-	// } else if (tsz > 0) {
-	// // System.out.println("ending...4");
-	// ByteBuffer bff = this.trl.removeFirst();
-	// ByteBuffer bflr = bff.asReadOnlyBuffer();
-	// // System.out.println("\r\nstart po:" + this.start);
-	// // System.out.println("limit po:" + (this.start + this.length - 1));
-	// // System.out.println("cap size:" + cp);
-	// bflr.position(this.start).limit(this.start + this.length - 1);
-	// while (bflr.hasRemaining()) {
-	// try {
-	// // System.out.println("temp:_"+this.temp);
-	// this.temp.write(bflr);
-	//
-	// } catch (IOException e) {
-	// throw new RuntimeException("temp:_" + this.temp, e);
-	//
-	// }
-	// }
-	// // BFCache.i.recycle(bff);
-	// }
-	// this.temp = null;
-	// // this.isexac=true;
-	// }
+ 
 	public void ending() {
 		//System.out.println("endding");
 		//new Throwable().printStackTrace();
@@ -460,6 +351,34 @@ public abstract class CaptureManager {
 		this.mdout(this.length);
 		dealending();
 
+	}
+	
+	private int figureLength(int cupo){
+		int trlsz = this.trl.size();
+		if(trlsz==0)
+			throw new RuntimeException();
+		return (trlsz>1)?cutrunk.capacity()-this.start + cupo +trlsz-2:cupo-this.start;
+		 
+	}
+	private void reducedLength(int length ,int cupo,int amount,int[] rtv){
+		int trlsz = this.trl.size();
+		if(trlsz==0)
+			throw new RuntimeException();
+		int capc =cutrunk.capacity();
+		if(cupo>=amount){
+			rtv[0]=0;
+			rtv[1]=cupo-amount;
+		}else{
+			int pt= amount/capc;
+			int ptm= amount%capc;
+			if(pt==0){
+				rtv[0]=1;
+				rtv[1]=capc+cupo-amount;
+			}else if(pt>0){
+				rtv[0]=pt+((ptm>0)?1:0);
+				rtv[1]=capc-(ptm-cupo);
+			}
+		}
 	}
 
 	private void out() {
